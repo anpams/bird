@@ -7,7 +7,7 @@ async function fetchLocation() {
         const lat = data.latitude;
         const lng = data.longitude;
         console.log(`Latitude: ${lat}, Longitude: ${lng}`);
-        recentObservations(lat, lng);
+        await recentObservations(lat, lng);
     } catch (error) {
         console.error('Error fetching geolocation:', error);
         document.getElementById('output').innerHTML = "Error fetching geolocation.";
@@ -111,16 +111,20 @@ async function fetchImage(pageTitle) {
         const response = await fetch(url);
         const data = await response.json();
         const pages = data.query.pages;
+        let found = false;
+
         for (const pageId in pages) {
             const page = pages[pageId];
             if (page.thumbnail && page.thumbnail.source) {
                 document.getElementById('imageContainer').innerHTML = `<img src="${page.thumbnail.source}" alt="${pageTitle}">`;
-                return;
-            } else {
-                console.log("No thumbnail");
-                document.getElementById('imageContainer').innerHTML = "No image found.";
-                return;
+                found = true;
+                break;
             }
+        }
+
+        if (!found) {
+            console.log("No thumbnail");
+            document.getElementById('imageContainer').innerHTML = "No image found.";
         }
     } catch (error) {
         console.error("Wiki Image error:", error);
