@@ -18,9 +18,7 @@ async function recentObservations(lat, lng) {
     const myHeaders = new Headers();
     myHeaders.append("x-ebirdapitoken", "t67f2dq8gt9f");
     const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow"
+        method: "GET", headers: myHeaders, redirect: "follow"
     };
     try {
         const url = `https://api.ebird.org/v2/data/obs/geo/recent/notable?lat=${lat}&lng=${lng}`;
@@ -30,8 +28,8 @@ async function recentObservations(lat, lng) {
             const sciName = data[0].sciName;
             const comName = data[0].comName;
             console.log(sciName);
-            document.getElementById('commonName').innerHTML = `Common Name: ${comName}`;
-            document.getElementById('scientificName').innerHTML = `Scientific Name: ${sciName}`;
+            document.getElementById('commonName').innerHTML = `${comName}`;
+            document.getElementById('scientificName').innerHTML = `${sciName}`;
             await xenoCanto(sciName);
             await fetchTitle(sciName);
         } else {
@@ -39,17 +37,15 @@ async function recentObservations(lat, lng) {
         }
     } catch (error) {
         console.error("Recent Observations error:", error);
-      //  document.getElementById('output').innerHTML = "Error fetching recent observations.";
+        //  document.getElementById('output').innerHTML = "Error fetching recent observations.";
     }
 }
 
 async function xenoCanto(sciName) {
     const requestOptions = {
-        method: "GET",
-        headers: {
+        method: "GET", headers: {
             "Content-Type": "application/json"
-        },
-        redirect: "follow"
+        }, redirect: "follow"
     };
 
     const url = `https://xeno-canto.org/api/2/recordings?query=${encodeURIComponent(sciName)}`;
@@ -75,10 +71,7 @@ async function xenoCanto(sciName) {
 async function fetchTitle(sciName) {
     let searchUrl = "https://en.wikipedia.org/w/api.php";
     let searchParams = {
-        action: "query",
-        list: "search",
-        srsearch: sciName,
-        format: "json"
+        action: "query", list: "search", srsearch: sciName, format: "json"
     };
 
     searchUrl = searchUrl + "?origin=*";
@@ -106,11 +99,7 @@ async function fetchTitle(sciName) {
 async function fetchImage(pageTitle) {
     let url = "https://en.wikipedia.org/w/api.php";
     const params = {
-        action: "query",
-        prop: "pageimages",
-        titles: pageTitle,
-        format: "json",
-        pithumbsize: 500
+        action: "query", prop: "pageimages", titles: pageTitle, format: "json", pithumbsize: 500
     };
 
     url = url + "?origin=*";

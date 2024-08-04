@@ -4,23 +4,34 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bird Audio Player</title>
+    <title>Notable bird near you</title>
+
 </head>
-<body><div class="title-with-tooltip">
+<body>
+<div class="title-with-tooltip">
     <h1>A notable bird near you</h1>
     <div class="tooltip">
         <span class="question-mark">?</span>
         <span class="tooltiptext">A notable observation is a bird seen that doesn't belong to the area</span>
     </div>
 </div>
-<div id="commonName"></div> <i class="fa-solid fa-question"></i>
-<div id="scientificName"></div>
-<div id="audioContainer">
-    <audio id="birdAudio" controls>
-        Your browser does not support the audio element.
-    </audio>
+
+<div class="container">
+    <div id="imageContainer">
+        <img src="" alt="bird image">
+    </div>
+    <div class="text">
+        The most recent notable observation near you is the bird called
+        <b><span id="commonName"></span></b> (<em><span id="scientificName"></span></em>)
+        <br><br>
+        You can hear how it sounds here:
+        <div id="audioContainer"><br>
+            <audio id="birdAudio" controls>
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
 </div>
-<div id="imageContainer"></div>
 
 <script src="app.js"></script>
 </body>
