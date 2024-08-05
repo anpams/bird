@@ -1,6 +1,6 @@
 const ipGeolocation_KEY = "12a2009dfbb24e4680299352f74ef232";
 
-async function fetchLocation() {
+async function fetchLocation() { //location API
     try {
         const response = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${ipGeolocation_KEY}`);
         const data = await response.json();
@@ -10,11 +10,11 @@ async function fetchLocation() {
         await recentObservations(lat, lng);
     } catch (error) {
         console.error('Error fetching geolocation:', error);
-        document.getElementById('output').innerHTML = "Error fetching geolocation.";
+        document.getElementById('output').innerHTML = "Error fetching geolocation. Try to disable your extensions.";
     }
 }
 
-async function recentObservations(lat, lng) {
+async function recentObservations(lat, lng) { //ebird API
     const myHeaders = new Headers();
     myHeaders.append("x-ebirdapitoken", "t67f2dq8gt9f");
     const requestOptions = {
@@ -33,15 +33,15 @@ async function recentObservations(lat, lng) {
             await xenoCanto(sciName);
             await fetchTitle(sciName);
         } else {
-            document.getElementById('output').innerHTML = "No notable recent observations found.";
+            document.getElementById('output').innerHTML = "No notable recent observations found :(";
         }
     } catch (error) {
         console.error("Recent Observations error:", error);
-        //  document.getElementById('output').innerHTML = "Error fetching recent observations.";
+        document.getElementById('output').innerHTML = "Error fetching recent observations.";
     }
 }
 
-async function xenoCanto(sciName) {
+async function xenoCanto(sciName) { //XenoCanto API
     const requestOptions = {
         method: "GET", headers: {
             "Content-Type": "application/json"
@@ -68,7 +68,7 @@ async function xenoCanto(sciName) {
     }
 }
 
-async function fetchTitle(sciName) {
+async function fetchTitle(sciName) { //looks for wiki page with scientific name
     let searchUrl = "https://en.wikipedia.org/w/api.php";
     let searchParams = {
         action: "query", list: "search", srsearch: sciName, format: "json"
@@ -96,7 +96,7 @@ async function fetchTitle(sciName) {
     }
 }
 
-async function fetchImage(pageTitle) {
+async function fetchImage(pageTitle) { //grabs img from wikipedia
     let url = "https://en.wikipedia.org/w/api.php";
     const params = {
         action: "query", prop: "pageimages", titles: pageTitle, format: "json", pithumbsize: 500
@@ -118,7 +118,9 @@ async function fetchImage(pageTitle) {
             if (page.thumbnail && page.thumbnail.source) {
                 document.getElementById('imageContainer').innerHTML = `<img src="${page.thumbnail.source}" alt="${pageTitle}">`;
                 found = true;
+                hideLoadingShowContent();
                 break;
+
             }
         }
 
@@ -130,6 +132,11 @@ async function fetchImage(pageTitle) {
         console.error("Wiki Image error:", error);
         document.getElementById('imageContainer').innerHTML = "Error fetching image.";
     }
+}
+
+function hideLoadingShowContent() {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('content').style.display = 'flex';
 }
 
 fetchLocation();
