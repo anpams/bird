@@ -9,8 +9,10 @@ async function fetchLocation() { //location API
         console.log(`Latitude: ${lat}, Longitude: ${lng}`);
         await recentObservations(lat, lng);
     } catch (error) {
+
         console.error('Error fetching geolocation:', error);
         document.getElementById('output').innerHTML = "Error fetching geolocation. Try to disable your extensions.";
+
     }
 }
 
