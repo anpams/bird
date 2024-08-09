@@ -1,4 +1,4 @@
-const ipGeolocation_KEY = "12a2009dfbb24e4680299352f74ef232";
+const ipGeolocation_KEY = "12a2009dfbxxxxxxx";
 
 async function fetchLocation() { //location API
     try {
@@ -18,7 +18,7 @@ async function fetchLocation() { //location API
 
 async function recentObservations(lat, lng) { //ebird API
     const myHeaders = new Headers();
-    myHeaders.append("x-ebirdapitoken", "t67f2dq8gt9f");
+    myHeaders.append("x-ebirdapitoken", "t67fxxxx");
     const requestOptions = {
         method: "GET", headers: myHeaders, redirect: "follow"
     };
